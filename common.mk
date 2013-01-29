@@ -29,6 +29,10 @@ PRODUCT_PACKAGES += \
     regulatory.bin \
     lib_driver_cmd_wl12xx
 
+# Apps
+PRODUCT_PACKAGES += \
+    OtterParts
+
 # Rootfs
 PRODUCT_COPY_FILES += \
     $(OTTER_COMMON_FOLDER)/ueventd.omap4430.rc:/root/ueventd.omap4430.rc
