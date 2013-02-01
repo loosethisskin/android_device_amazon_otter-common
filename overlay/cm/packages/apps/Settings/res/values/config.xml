@@ -20,4 +20,7 @@
     <!-- Show Expanded Desktop preference -->
     <bool name="config_show_expandedDesktop">true</bool>
 
+    <!-- Disable Volume rocker support. -->
+    <bool name="has_volume_rocker">false</bool>
+
 </resources>
