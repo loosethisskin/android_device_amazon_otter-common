@@ -93,3 +93,6 @@ TW_MAX_BRIGHTNESS := 254
 
 # bionic optimizations
 ARCH_ARM_HAVE_32_BYTE_CACHE_LINES := true
+
+# Enable prefetch optimizations
+COMMON_GLOBAL_CFLAGS += -D__ARM_USE_PLD -D__ARM_CACHE_LINE_SIZE=32
