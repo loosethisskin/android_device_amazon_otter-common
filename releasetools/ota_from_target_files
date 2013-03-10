@@ -424,7 +424,8 @@ def WriteFullOTAPackage(input_zip, output_zip):
   script.UnpackPackageDir("system", "/system")
 
   # otter/otter2 modifications
-  script.DeleteFiles(["/system/bin/recovery"])
+  script.DeleteFiles(["/system/bin/applypatch"] +
+                     ["/system/bin/recovery"])
 
   symlinks = CopySystemFiles(input_zip, output_zip)
   script.MakeSymlinks(symlinks)
