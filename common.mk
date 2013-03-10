@@ -48,6 +48,10 @@ PRODUCT_COPY_FILES += \
     $(OTTER_COMMON_FOLDER)/prebuilt/etc/media_codecs.xml:/system/etc/media_codecs.xml \
     $(OTTER_COMMON_FOLDER)/prebuilt/etc/media_profiles.xml:/system/etc/media_profiles.xml
 
+# frandom
+PRODUCT_COPY_FILES += \
+    $(OTTER_COMMON_FOLDER)/prebuilt/etc/init.d/00random:system/etc/init.d/00random \
+
 # Prebuilt /system/usr
 PRODUCT_COPY_FILES += \
     $(OTTER_COMMON_FOLDER)/prebuilt/usr/idc/ilitek_i2c.idc:/system/usr/idc/ilitek_i2c.idc \
