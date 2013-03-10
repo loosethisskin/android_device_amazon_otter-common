@@ -33,6 +33,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     OtterParts
 
+# Tweaks
+PRODUCT_PACKAGES += \
+    armzipalign
+
 # Rootfs
 PRODUCT_COPY_FILES += \
     $(OTTER_COMMON_FOLDER)/ueventd.omap4430.rc:/root/ueventd.omap4430.rc
