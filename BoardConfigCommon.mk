@@ -31,10 +31,17 @@ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/amazon/otter-common/blueto
 TI_OMAP4_CAMERAHAL_VARIANT := false
 USE_CAMERA_STUB := true
 
+# Use the custom kernel toolchain to compile the external modules if one is defined
+ifneq ($(TARGET_KERNEL_CUSTOM_TOOLCHAIN),)
+    KERNEL_ARM_EABI_TOOLCHAIN="$(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN)/bin"
+else
+    KERNEL_ARM_EABI_TOOLCHAIN="$(ARM_EABI_TOOLCHAIN)"
+endif
+
 # WLAN Build
 WLAN_MODULES:
 	make clean -C hardware/ti/wlan/mac80211/compat_wl12xx
-	make -j8 -C hardware/ti/wlan/mac80211/compat_wl12xx KERNEL_DIR=$(KERNEL_OUT) KLIB=$(KERNEL_OUT) KLIB_BUILD=$(KERNEL_OUT) ARCH=arm CROSS_COMPILE="arm-eabi-"
+	make -j8 -C hardware/ti/wlan/mac80211/compat_wl12xx KERNEL_DIR=$(KERNEL_OUT) KLIB=$(KERNEL_OUT) KLIB_BUILD=$(KERNEL_OUT) ARCH=arm CROSS_COMPILE=$(KERNEL_ARM_EABI_TOOLCHAIN)/arm-eabi-
 	mv hardware/ti/wlan/mac80211/compat_wl12xx/compat/compat.ko $(KERNEL_MODULES_OUT)
 	mv hardware/ti/wlan/mac80211/compat_wl12xx/net/mac80211/mac80211.ko $(KERNEL_MODULES_OUT)
 	mv hardware/ti/wlan/mac80211/compat_wl12xx/net/wireless/cfg80211.ko $(KERNEL_MODULES_OUT)
@@ -54,7 +61,7 @@ TARGET_KERNEL_MODULES += WLAN_MODULES
 SGX_MODULES:
 	make clean -C $(COMMON_FOLDER)/pvr-source/eurasiacon/build/linux2/omap4430_android
 	cp $(TARGET_KERNEL_SOURCE)/drivers/video/omap2/omapfb/omapfb.h $(KERNEL_OUT)/drivers/video/omap2/omapfb/omapfb.h
-	make -j8 -C $(COMMON_FOLDER)/pvr-source/eurasiacon/build/linux2/omap4430_android ARCH=arm KERNEL_CROSS_COMPILE=arm-eabi- CROSS_COMPILE=arm-eabi- KERNELDIR=$(KERNEL_OUT) TARGET_PRODUCT="blaze_tablet" BUILD=release TARGET_SGX=540 PLATFORM_VERSION=4.0
+	make -j8 -C $(COMMON_FOLDER)/pvr-source/eurasiacon/build/linux2/omap4430_android ARCH=arm KERNEL_CROSS_COMPILE=$(KERNEL_ARM_EABI_TOOLCHAIN)/arm-eabi- CROSS_COMPILE=$(KERNEL_ARM_EABI_TOOLCHAIN)/arm-eabi- KERNELDIR=$(KERNEL_OUT) TARGET_PRODUCT="blaze_tablet" BUILD=release TARGET_SGX=540 PLATFORM_VERSION=4.0
 	mv $(KERNEL_OUT)/../../target/kbuild/pvrsrvkm_sgx540_120.ko $(KERNEL_MODULES_OUT)
 	$(ARM_EABI_TOOLCHAIN)/arm-eabi-strip --strip-unneeded $(KERNEL_MODULES_OUT)/pvrsrvkm_sgx540_120.ko
 
