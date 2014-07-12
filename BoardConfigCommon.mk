@@ -62,7 +62,6 @@ SGX_MODULES:
 	$(ARM_EABI_TOOLCHAIN)/arm-eabi-strip --strip-unneeded $(KERNEL_MODULES_OUT)/pvrsrvkm_sgx540_120.ko
 
 TARGET_KERNEL_MODULES += SGX_MODULES
-TARGET_KERNEL_SELINUX_CONFIG := otter_selinux_defconfig
 
 # Filesystem
 TARGET_USERIMAGES_USE_EXT4 := true
@@ -88,6 +87,10 @@ COMMON_GLOBAL_CFLAGS += -DUSES_TI_MAC80211
 else
 WPA_SUPPLICANT_VERSION           := VER_0_8_X
 endif
+
+# Recovery
+BOARD_RECOVERY_SWIPE := true
+BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../$(OTTER_COMMON_FOLDER)/recovery/recovery_keys.c
 
 # TWRP Config
 DEVICE_RESOLUTION := 1024x600
